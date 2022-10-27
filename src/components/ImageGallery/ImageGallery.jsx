@@ -18,7 +18,11 @@ export const ImageGallery = ({ gallery, onClick, query }) => {
   );
 };
 ImageGallery.propTypes = {
-  gallery: PropTypes.arrayOf(PropTypes.object),
+  gallery: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+    })
+  ),
   onClick: PropTypes.func.isRequired,
   query: PropTypes.string.isRequired,
 };

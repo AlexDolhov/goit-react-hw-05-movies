@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Component } from 'react';
 import { GrSearch } from 'react-icons/gr';
 import { toast } from 'react-toastify';
@@ -47,3 +48,7 @@ export class Searchbar extends Component {
     );
   }
 }
+
+Searchbar.propType = {
+  onSubmit: PropTypes.func.isRequired,
+};
