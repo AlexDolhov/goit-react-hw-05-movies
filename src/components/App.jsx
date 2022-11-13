@@ -44,7 +44,7 @@ export const App = () => {
 
   useEffect(() => {
     if (totalImages && totalImages === gallery.length) {
-      toast.error('There is no more imeges to load, on such query');
+      toast.warn('There is no more imeges to load, on such query');
     }
     return;
   }, [gallery, totalImages]);
