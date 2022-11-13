@@ -1,53 +1,49 @@
 import PropTypes from 'prop-types';
-import { Component } from 'react';
+import { useState } from 'react';
 import { GrSearch } from 'react-icons/gr';
 import { toast } from 'react-toastify';
 
 import { Button, Header, SearchForm, SearchInput } from './Searchbar.styled';
 
-export class Searchbar extends Component {
-  state = {
-    query: '',
+export const Searchbar = ({ onSubmit }) => {
+  const [query, setQuery] = useState('');
+
+  const inputQueryChange = e => {
+    setQuery(e.currentTarget.value.toLowerCase());
   };
 
-  inputQueryChange = e => {
-    this.setState({ query: e.currentTarget.value.toLowerCase() });
-  };
-
-  querySubmit = e => {
+  const querySubmit = e => {
     e.preventDefault();
 
-    if (this.state.query.trim() === '') {
+    if (query.trim() === '') {
       // alert('Please enter valid search query.');
       return toast.error('Please enter valid search query.');
     }
 
-    this.props.onSubmit(this.state.query);
-    this.setState({ query: '' });
+    onSubmit(query);
+    setQuery('');
     e.target.reset();
   };
 
-  render() {
-    return (
-      <Header>
-        <SearchForm onSubmit={this.querySubmit}>
-          <Button type="submit">
-            <GrSearch size="18" />
-            {/* <Label>Search</Label> */}
-          </Button>
+  return (
+    <Header>
+      <SearchForm onSubmit={querySubmit}>
+        <Button type="submit">
+          <GrSearch size="18" />
+          {/* <Label>Search</Label> */}
+        </Button>
 
-          <SearchInput
-            type="text"
-            autocomplete="off"
-            autoFocus
-            placeholder="Search images and photos"
-            onChange={this.inputQueryChange}
-          />
-        </SearchForm>
-      </Header>
-    );
-  }
-}
+        <SearchInput
+          type="text"
+          autocomplete="off"
+          autoFocus
+          placeholder="Search images and photos"
+          onChange={inputQueryChange}
+        />
+      </SearchForm>
+    </Header>
+  );
+};
 
 Searchbar.propType = {
   onSubmit: PropTypes.func.isRequired,

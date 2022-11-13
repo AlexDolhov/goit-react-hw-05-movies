@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useState, useEffect } from 'react';
 import { fetchImages } from '../api';
 import { Container } from 'components/App.styled';
 import { Searchbar } from './Searchbar/Searchbar';
@@ -10,95 +10,76 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { Loader } from './Loader/Loader';
 
-export class App extends Component {
-  state = {
-    query: '',
-    page: 1,
-    totalImages: 0,
-    gallery: [],
-    largeImageURL: null,
-    isLoading: false,
-    error: null,
-  };
+export const App = () => {
+  const [query, setQuery] = useState('');
+  const [page, setPage] = useState(1);
+  const [totalImages, setTotalImages] = useState(0);
+  const [gallery, setGallery] = useState([]);
+  const [largeImageURL, setLargeImageURL] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  // const [error, setError] = useState(null);
 
-  async componentDidUpdate(_, prevState) {
-    const { query, page, gallery } = this.state;
+  useEffect(() => {
+    if (!query) {
+      return;
+    }
 
-    if (prevState.query !== query) {
-      // this.setState({ isLoading: true });
+    const getImages = async () => {
       try {
-        this.setState({ isLoading: true, gallery: [] });
-
+        setIsLoading(true);
         const response = await fetchImages(query, page);
         const totalImages = response.total;
         const gallery = response.hits;
-        // console.log(gallery);
-        // console.log(gallery.length);
-        // console.log(totalImages);
-        this.setState({ gallery, totalImages });
+        setGallery(state => [...state, ...gallery]);
+        setTotalImages(totalImages);
       } catch {
-        // console.log(error);
-        // this.setState({ error: 'Failed to load gallary :(' });
+        // setError('Failed to load gallary :(');
         toast.error('Failed to load gallary, please reload the page');
       } finally {
-        this.setState({ isLoading: false });
+        setIsLoading(false);
       }
-      return;
+    };
+    getImages();
+  }, [page, query]);
+
+  useEffect(() => {
+    if (totalImages && totalImages === gallery.length) {
+      toast.error('There is no more imeges to load, on such query');
     }
+    return;
+  }, [gallery, totalImages]);
 
-    if (prevState.page !== page) {
-      this.setState({ isLoading: true });
-      try {
-        if (prevState.totalImages !== gallery.length) {
-          const response = await fetchImages(query, page);
-          const gallery = response.hits;
-          // console.log(gallery);
-          this.setState({ gallery: [...prevState.gallery, ...gallery] });
-        } else return toast.warning('No more images to load');
-      } catch {
-        toast.error('Failed to load more images, please try again');
-      } finally {
-        this.setState({ isLoading: false });
-      }
-      return;
-    }
-  }
-
-  querySubmit = query => {
-    this.setState({ query, page: 1 });
+  const querySubmit = query => {
+    setQuery(query);
+    setPage(1);
+    setGallery([]);
+    // setError(null);
   };
 
-  setLargeImageURL = largeImageURL => {
-    this.setState({ largeImageURL });
+  const onLargeImageURL = largeImageURL => {
+    setLargeImageURL(largeImageURL);
   };
 
-  loadMore = () => {
-    this.setState(prevState => ({
-      page: prevState.page + 1,
-    }));
+  const loadMore = () => {
+    setPage(state => state + 1);
   };
 
-  closeModal = () => {
-    this.setState({ largeImageURL: null });
+  const closeModal = () => {
+    setLargeImageURL(null);
   };
 
-  render() {
-    const { gallery, largeImageURL, query, isLoading } = this.state;
-    return (
-      <Container>
-        <Searchbar onSubmit={this.querySubmit} />
-        <ImageGallery
-          gallery={gallery}
-          query={query}
-          onClick={this.setLargeImageURL}
-        />
-        {isLoading && <Loader />}
-        {gallery.length > 0 && <Button onClick={this.loadMore} />}
-        <ToastContainer autoClose={3000} />
-        {largeImageURL && (
-          <Modal largeImageURL={largeImageURL} onClose={this.closeModal} />
-        )}
-      </Container>
-    );
-  }
-}
+  const isLoadMoreBtn = gallery.length > 0 && !isLoading;
+
+  return (
+    <Container>
+      <Searchbar onSubmit={querySubmit} />
+      <ImageGallery gallery={gallery} query={query} onClick={onLargeImageURL} />
+      {isLoading && <Loader />}
+      {isLoadMoreBtn && <Button onClick={loadMore} />}
+      <ToastContainer autoClose={3000} />
+      {largeImageURL && (
+        <Modal largeImageURL={largeImageURL} onClose={closeModal} />
+      )}
+    </Container>
+  );
+};
