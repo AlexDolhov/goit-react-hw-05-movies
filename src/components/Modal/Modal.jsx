@@ -18,6 +18,7 @@ export const Modal = ({ onClose, largeImageURL }) => {
       onClose();
     }
   };
+  // commit failed lights is gone
 
   return (
     <Overlay onClick={handleClose}>
