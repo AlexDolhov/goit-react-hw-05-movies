@@ -11,8 +11,8 @@ const Home = () => {
       try {
         const response = await fetchTrandingMovies();
         const movies = response.results;
-        console.log('response', response);
-        console.log('movies', movies);
+        // console.log('response', response);
+        // console.log('movies', movies);
         setTrandingMovies(movies);
       } catch {
         // setError('Failed to load gallary :(');

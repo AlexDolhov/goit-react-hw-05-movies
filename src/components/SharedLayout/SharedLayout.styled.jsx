@@ -6,21 +6,45 @@ export const Container = styled.div`
     display: 'flex';
     justify-content: 'center';
     align-items: 'center'; */
-  font-size: 40px;
+  /* max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-right: 16px;
+  padding-left: 16px; */
+  /* font-size: 40px; */
   color: #010101;
 `;
 
 export const Link = styled(NavLink)`
   /* display: flex; */
   /* align-items: center; */
-  gap: 10px;
-  padding: 4px;
+
+  padding: 4px 8px;
+
+  line-height: 1;
   border-radius: 4px;
+  /* border: 1px solid; */
+  font-size: 24px;
   text-decoration: none;
   color: #000000;
+  box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%),
+    0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+  transition: box-shadow 250ms linear;
+
+  &:not(:last-child) {
+    margin-right: 8px;
+  }
 
   &.active {
-    color: orange;
+    color: rgb(255, 165, 0);
+    box-shadow: 0px 2px 1px -1px rgb(255 165 0 / 20%),
+      0px 1px 1px 0px rgb(255 165 0 / 14%), 0px 1px 3px 0px rgb(255 165 0 / 12%);
+  }
+
+  &:hover,
+  &:focus {
+    box-shadow: 0px 2px 1px -1px rgb(255 165 0 / 20%),
+      0px 1px 1px 0px rgb(255 165 0 / 14%), 0px 1px 3px 0px rgb(255 165 0 / 12%);
   }
 `;
 
@@ -32,11 +56,10 @@ export const Header = styled.header`
   display: flex;
   /* justify-content: center; */
   align-items: center;
-  min-height: 60px;
-  padding-right: 22px;
-  padding-left: 22px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  min-height: 50px;
+  padding: 8px 12px;
+  margin-bottom: 16px;
+
   color: #2a2a2a;
   background-color: #fff;
   overflow: hidden;
