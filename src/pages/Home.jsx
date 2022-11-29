@@ -26,10 +26,10 @@ const Home = () => {
   }, []);
 
   return (
-    <main>
+    <>
       <h1>Tranding movie</h1>
       <MoviesList movies={trandingMovies} />
-    </main>
+    </>
   );
 };
 

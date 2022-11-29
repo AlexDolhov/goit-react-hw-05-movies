@@ -34,6 +34,7 @@ export const SearchBar = ({ onSubmit }) => {
         type="text"
         autocomplete="off"
         autoFocus
+        name="query"
         placeholder="Search movie"
         onChange={inputQueryChange}
       />

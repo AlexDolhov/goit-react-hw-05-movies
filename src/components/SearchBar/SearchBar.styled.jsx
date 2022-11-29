@@ -9,8 +9,9 @@ export const SearchForm = styled.form`
   border-radius: 3px;
   border: 1px solid;
   /* overflow: hidden; */
-  margin-left: auto;
-  margin-right: auto;
+  /* margin-left: auto;
+  margin-right: auto; */
+  margin-bottom: 12px;
 
   box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%),
     0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
