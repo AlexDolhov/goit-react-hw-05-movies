@@ -41,7 +41,6 @@ const Cast = () => {
                 src={profile_path && `${base_url}w200${profile_path}`}
                 alt={name}
                 width="240"
-                loading="lazy"
               />
             )}
 

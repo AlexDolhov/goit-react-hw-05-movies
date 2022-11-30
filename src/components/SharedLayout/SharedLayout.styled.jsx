@@ -6,7 +6,7 @@ export const Container = styled.div`
     display: 'flex';
     justify-content: 'center';
     align-items: 'center'; */
-  max-width: 480px;
+  max-width: 768px;
   margin-left: auto;
   margin-right: auto;
   /* padding-right: 16px;
