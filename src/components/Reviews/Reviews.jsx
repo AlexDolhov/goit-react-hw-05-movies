@@ -13,7 +13,7 @@ const Reviews = () => {
         try {
           const response = await fetchMovieReviews(movieId);
           const reviews = response.results;
-          console.log(reviews);
+          // console.log(reviews);
           setReviews(reviews);
         } catch {
           toast.error(

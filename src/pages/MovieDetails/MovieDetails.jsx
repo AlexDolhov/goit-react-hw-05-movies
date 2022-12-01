@@ -23,7 +23,7 @@ const MovieDetails = () => {
           setIsLoading(true);
           const response = await fetchMovieById(movieId);
           const movie = response;
-          console.log(movie);
+          // console.log(movie);
           setMovie(movie);
         } catch {
           toast.error(

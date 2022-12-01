@@ -15,7 +15,7 @@ const Cast = () => {
         try {
           const response = await fetchMovieCredits(movieId);
           const cast = response.cast;
-          console.log(cast);
+          // console.log(cast);
           setCast(cast);
         } catch {
           toast.error(
